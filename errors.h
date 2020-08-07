@@ -13,30 +13,25 @@
 #define EPARAMETER "Please provide correct parameter"
 
 typedef enum errors {
-	ERR_NL80211
+	ERR_NL80211,
 	ERR_NETLINK,
 	ERR_SOCKET,
+	ERR_RESOLVE,
 	ERR_MSG_CREATE,
 	ERR_MSG_APPEND,
 	ERR_MSG_COMPLETE,
-	ERR_MSQ_CREATE,
-	ERR_MSQ_SET,
-	ERR_MSQ_CONNECT,
-	ERR_MSQ_LOOP,
-	ERR_MSQ_PUB
+	ERR_CB_ALLOCATE
 } err;
 
 static char *error_messages[] =  {
 	"Could not allocate nl80211 state struct: ",
 	"Could not connect to Netlink: ",
-	"Could not allocate Netlink socket: "
+	"Could not allocate Netlink socket: ",
+	"nl80211 interface not found: ",
 	"Could not allocate netlink message: ",
 	"Could not append netlink message: ",
 	"Could not autocomplete netlink message: ",
-	"Could not create new mosquitto client instance: ",
-	"Could not set maximum inflight messages option: ",
-	"Could not connect to MQTT broker: ",
-	"Could not start mosquitto loop: "
+	"Could not create Netlink callback: ",
 };
 
 #endif

@@ -19,8 +19,9 @@
 #endif
 
 struct nl80211_state {
+	int id;
+	struct nl_cb *callback;
 	struct nl_sock *socket;
-	int driver_id;
 };
 
 #endif
