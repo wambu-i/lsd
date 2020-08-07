@@ -44,6 +44,8 @@ static int nl80211_process_events(struct nl_msg *msg, void *arg) {
 
 	gnlh = nlmsg_data(nlmsg_hdr(msg));
 	nl_msg_dump(msg, stdout);
+
+	nla_parse(tb_msg, NL80211_ATTR_MAX, genlmsg_attrdata(gnlh, 0), genlmsg_attrlen(gnlh, 0), NULL);
 	return 0;
 }
 
@@ -64,7 +66,7 @@ static int get_wifi_messages(struct nl80211_state *state, char *ifname) {
 		return EXIT_FAILURE;
 	}
 
-	genlmsg_put(msg, NL_AUTO_PORT, NL_AUTO_SEQ, state->id, 0, NLM_F_DUMP, 0, 0);
+	genlmsg_put(msg, 0, 0, state->id, 0, NLM_F_DUMP, 0, 0);
 	nla_put_u32(msg, NL80211_ATTR_IFINDEX, idx);
 
 	//nl_send_auto(state->socket, msg);
