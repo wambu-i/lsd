@@ -4,17 +4,18 @@ OUTPUT:=disconnect
 OBJECTS:=main.o
 DEPS:=errors.h disconnect.h
 
+CFLAGS:=-I/usr/include/libnl3/
 CXXFLAGS = $(CFLAGS) -Os -Wall --std=gnu99 -g3 -Wmissing-declarations
 
-LDFLAGS = -lnl -lnl-genl
-DFLAGS:=$(CFLAGS) -DDEBUG -g -O0
+LSDFLAGS = $(LDFLAGS) -lnl-3 -lnl-genl-3
+DFLAGS:=$(CXXFLAGS) -DDEBUG -g -O0
 
 COMPILE:=$(CC) $(CXXFLAGS)
 
 all: $(OUTPUT)
 
 $(OUTPUT): $(OBJECTS)
-	$(COMPILE) -o $@ $^ $(LIBRARIES)
+	$(COMPILE) -o $@ $^ $(LSDFLAGS)
 
 %.o: %.c $(DEPS)
 	$(COMPILE) -c $< -o $@

@@ -2,26 +2,31 @@
 #ifndef DISCONNECT_H
 #define DISCONNECT_H
 
-#include <json-c/json_object.h>
-#include <netlink/netlink.h>
-#include <netlink/genl/genl.h>
-#include <netlink/genl/family.h>
-#include <netlink/genl/ctrl.h>
+#include <stdint.h>
 
-#define ETH_ALEN 6
-
-#ifndef NETLINK_EXT_ACK
-#define NETLINK_EXT_ACK 11
-#endif
-
-#ifndef SOL_NETLINK
-#define SOL_NETLINK 270
-#endif
+#define MAC_LEN 6
 
 struct nl80211_state {
-	int id;
-	struct nl_cb *callback;
+	int family;
 	struct nl_sock *socket;
+	struct nl_cache *cache;
+	struct genl_family *nl80211;
+	struct genl_family *nlctrl;
+};
+
+struct station_info_entry {
+	uint8_t	mac[MAC_LEN];
+	int8_t signal;
+};
+
+struct nl80211_msg {
+	struct nl_msg *msg;
+	struct nl_cb *callback;
+};
+
+struct station_info_buffer {
+	void *buf;
+	int len;
 };
 
 #endif

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
 #define STR_LEN 150
 #define _handle_error(msg) \
@@ -20,7 +21,10 @@ typedef enum errors {
 	ERR_MSG_CREATE,
 	ERR_MSG_APPEND,
 	ERR_MSG_COMPLETE,
-	ERR_CB_ALLOCATE
+	ERR_CB_ALLOCATE,
+	ERR_GENL_SEARCH,
+	ERR_GENL_CACHE,
+	ERR_INFO_ALLOCATE,
 } err;
 
 static char *error_messages[] =  {
@@ -32,6 +36,9 @@ static char *error_messages[] =  {
 	"Could not append netlink message: ",
 	"Could not autocomplete netlink message: ",
 	"Could not create Netlink callback: ",
+	"Could not resolve Netlink family: ",
+	"Could not allocate Netlink cache: ",
+	"Could not allocate buffer for station info: "
 };
 
 #endif
