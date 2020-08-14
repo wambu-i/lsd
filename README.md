@@ -4,4 +4,4 @@ This utility provides information on how many AP clients connected to the Wi-Fi 
 The information is updated periodically after a configurable interval.
 
 Usage:
-``` luajit lsd.lua <interface> <interval> <threshold>```
+``` luajit lsd.lua <interface> <interval> <threshold> <loops>```
