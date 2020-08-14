@@ -36,13 +36,18 @@ function get_devices_signal()
 	local next_poll = now + interval
 	get_connected_stations(iface)
 	local secs = next_poll - now
-	if secs > 0 then socket.sleep(secs) end
+--	if secs > 0 then socket.sleep(secs) end
 end
 
-while true do
+--[[ while true do
 	local _, err = pcall(function () get_devices_signal() end)
 	if err ~= nil then
 		log.error(err)
 		break
 	end
+end ]]
+
+for i = 1, threshold do
+	get_devices_signal()
+	socket.sleep(interval)
 end
