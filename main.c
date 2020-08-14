@@ -265,11 +265,13 @@ int main(int argc, char **argv) {
 	struct station_info_entry *entry;
 
 	int devs = 0;
+	int loops = 0;
 	int frequency = 0;
 	int threshold = 0;
 	char *ifname = NULL;
 
-	while ((o = getopt(argc, argv, "f:i:t:")) != -1) {
+
+	while ((o = getopt(argc, argv, "f:i:t:l:")) != -1) {
 		switch (o) {
 			case 'f':
 				frequency = atoi(optarg);
@@ -279,6 +281,9 @@ int main(int argc, char **argv) {
 				break;
 			case 't':
 				threshold = atoi(optarg);
+				break;
+			case 'l':
+				loops = atoi(optarg);
 				break;
 			case '?':
 				fprintf(stderr, "Unknown option '%c'\n", optopt);
@@ -292,7 +297,9 @@ int main(int argc, char **argv) {
 	buffer.buf = tmp;
 	buffer.len = 0;
 
-	while (1) {
+	//while (1) {
+
+	for (int i = 0; i < loops; i++) {
 		err = get_associated_stations(&buffer, ifname);
 
 		if (err) {
@@ -307,7 +314,7 @@ int main(int argc, char **argv) {
 		for (int i = 0; i < buffer.len; i += sizeof(struct station_info_entry)) {
 			entry = (struct station_info_entry *) &buffer.buf[i];
 
-			fprintf(stdout, "%02X:%02X:%02X:%02X:%02X:%02X - ", entry->mac[0], entry->mac[1],
+			fprintf(stdout, "Client: %02X:%02X:%02X:%02X:%02X:%02X - Signal: ", entry->mac[0], entry->mac[1],
 					entry->mac[2], entry->mac[3], entry->mac[4], entry->mac[5]);
 			if (!entry->signal)
 				fprintf(stdout, "unknown signal\n");
@@ -318,11 +325,14 @@ int main(int argc, char **argv) {
 				devs++;
 		}
 
-		fprintf(stdout, "%d client(s) under threshold signal.\n", devs++);
-
+		fprintf(stdout, "%d client(s) under threshold signal.\n", devs);
 		devs = 0;
 		sleep(frequency);
 	}
+
+	//
+	//sleep(frequency);
+	//}
 
 	return 0;
 }
