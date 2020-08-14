@@ -8,6 +8,7 @@ local args = {...}
 local iface = args[1]
 local interval = args[2]
 local threshold = tonumber(args[3])
+local loops = tonumber(args[4])
 
 function get_connected_stations(iface)
 	local api = iwinfo.type(iface)
@@ -47,7 +48,7 @@ end
 	end
 end ]]
 
-for i = 1, threshold do
+for i = 1, loops do
 	get_devices_signal()
 	socket.sleep(interval)
 end
